@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Hamada\FilamentLocalized\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -13,13 +13,13 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
+use Hamada\FilamentLocalized\FilamentLocalizedServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use VendorName\Skeleton\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Hamada\\FilamentLocalized\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -51,7 +51,7 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            SkeletonServiceProvider::class,
+            FilamentLocalizedServiceProvider::class,
         ];
 
         sort($providers);
@@ -62,6 +62,11 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app): void
     {
         $app['config']->set('database.default', 'testing');
+
+        $app['config']->set(
+            'app.key',
+            'base64:' . base64_encode(str_repeat('0', 32))
+        );
     }
 
     protected function defineDatabaseMigrations(): void

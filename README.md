@@ -1,95 +1,628 @@
-# :package_description
+# Filament Localized
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+Multilingual infrastructure for [Filament 5](https://filamentphp.com/), providing reusable localized form fields, relationship selects, table columns, infolist entries, multilingual search, and configurable translation fallbacks.
 
-<!--delete-->
----
-This repo can be used to scaffold a Filament plugin. Follow these steps to get started:
+## Features
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Make something great!
----
-<!--/delete-->
+- 🌍 Multi-language form tabs
+- 🔎 Multilingual table search
+- 🔗 Localized relationship selects
+- 🔍 Multilingual relationship search
+- 📋 Localized table columns
+- 📄 Localized infolist entries
+- ↔️ RTL/LTR locale support
+- 🔄 Configurable translation fallback
+- ⚙️ Centralized locale configuration
+- 🧩 Reusable API through `Localized`
+- 🧪 Tested with Filament 5
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+## Requirements
+
+- PHP `^8.2`
+- Filament `^5.0`
+- Laravel application compatible with Filament 5
 
 ## Installation
 
-You can install the package via composer:
+Install the package with Composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require hamada/filament-localized
 ```
 
-> [!IMPORTANT]
-> If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
-
-After setting up a custom theme add the plugin's views to your theme css file or your app's css file if using the standalone packages.
-
-```css
-@source '../../../../vendor/:vendor_slug/:package_slug/resources/**/*.blade.php';
-```
-
-You can publish and run the migrations with:
+Publish the package configuration:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
+php artisan vendor:publish --tag=filament-localized-config
 ```
 
-You can publish the config file with:
+The configuration file will be available at:
 
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
+```text
+config/filament-localized.php
 ```
 
-Optionally, you can publish the views using
+You can then customize the supported locales and fallback behavior.
 
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
+## Configuration
+
+The package stores translations as JSON objects.
+
+For example:
+
+```json
+{
+    "ar": "الروبوتات",
+    "fr": "Robotique",
+    "en": "Robotics"
+}
 ```
 
-This is the contents of the published config file:
+The default configuration supports Arabic, French, and English:
+
+```php
+'locales' => [
+
+    'ar' => [
+        'label' => 'العربية',
+        'short' => 'AR',
+        'direction' => 'rtl',
+    ],
+
+    'fr' => [
+        'label' => 'Français',
+        'short' => 'FR',
+        'direction' => 'ltr',
+    ],
+
+    'en' => [
+        'label' => 'English',
+        'short' => 'EN',
+        'direction' => 'ltr',
+    ],
+
+],
+```
+
+You can add or remove locales according to your application.
+
+For example:
+
+```php
+'locales' => [
+
+    'ar' => [
+        'label' => 'العربية',
+        'short' => 'AR',
+        'direction' => 'rtl',
+    ],
+
+    'fr' => [
+        'label' => 'Français',
+        'short' => 'FR',
+        'direction' => 'ltr',
+    ],
+
+    'en' => [
+        'label' => 'English',
+        'short' => 'EN',
+        'direction' => 'ltr',
+    ],
+
+    'de' => [
+        'label' => 'Deutsch',
+        'short' => 'DE',
+        'direction' => 'ltr',
+    ],
+
+],
+```
+
+## Translation Fallback
+
+The package resolves translations using the following order:
+
+```text
+Current locale → fr → en → ar
+```
+
+For example, when the current locale is `ar`:
+
+```php
+[
+    'fr' => 'Robotique',
+    'en' => 'Robotics',
+]
+```
+
+The resolved value will be:
+
+```text
+Robotique
+```
+
+If French is also unavailable:
+
+```php
+[
+    'en' => 'Robotics',
+]
+```
+
+the package will resolve:
+
+```text
+Robotics
+```
+
+Configure the fallback order in:
+
+```php
+'fallback_locales' => [
+    'fr',
+    'en',
+    'ar',
+],
+```
+
+The current application locale is always checked first.
+
+## Localized Form Tabs
+
+Use `Localized::tabs()` to create language tabs for your form fields.
+
+```php
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
+use Hamada\FilamentLocalized\Facades\Localized;
+
+Localized::tabs([
+    TextInput::make('name')
+        ->label('Name'),
+
+    RichEditor::make('description')
+        ->label('Description'),
+])
+```
+
+The package generates a field structure based on the configured locales.
+
+For example:
+
+```text
+name.ar
+name.fr
+name.en
+
+description.ar
+description.fr
+description.en
+```
+
+The resulting state can be stored directly in a JSON column:
+
+```json
+{
+    "ar": "الروبوتات",
+    "fr": "Robotique",
+    "en": "Robotics"
+}
+```
+
+### Database columns
+
+Your translation fields should normally use a JSON-compatible database column.
+
+For Laravel migrations:
+
+```php
+$table->json('name')->nullable();
+$table->json('description')->nullable();
+```
+
+For MySQL, make sure the database supports JSON columns.
+
+## Localized Select
+
+Use `Localized::select()` for localized relationship options.
+
+```php
+use Hamada\FilamentLocalized\Facades\Localized;
+
+Localized::select('skill_id')
+    ->relationship('skill')
+    ->localizedTitle('name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+The option label is resolved using the configured translation fallback.
+
+For example:
+
+```json
+{
+    "ar": "الروبوتات",
+    "fr": "Robotique",
+    "en": "Robotics"
+}
+```
+
+The displayed option automatically follows the current locale and fallback configuration.
+
+### Multiple relationships
+
+The same API works with multiple relationships:
+
+```php
+Localized::select('skills')
+    ->multiple()
+    ->relationship('skills')
+    ->localizedTitle('name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+## Localized Relationship Search
+
+When:
+
+```php
+->localizedSearch()
+```
+
+is enabled, relationship searches are performed across the configured search locales.
+
+For example:
+
+```php
+Localized::select('skill_id')
+    ->relationship('skill')
+    ->localizedTitle('name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+A search can match:
+
+```text
+العربية
+```
+
+or:
+
+```text
+Robotique
+```
+
+or:
+
+```text
+Robotics
+```
+
+depending on the configured search locales.
+
+By default:
+
+```php
+'search_locales' => null,
+```
+
+means that all configured locales are searched.
+
+You can restrict the locales:
+
+```php
+'search_locales' => [
+    'ar',
+    'fr',
+],
+```
+
+## Localized Table Columns
+
+Use `Localized::column()` for translated JSON attributes in Filament tables.
+
+```php
+use Hamada\FilamentLocalized\Facades\Localized;
+
+Localized::column('name')
+    ->label('Name');
+```
+
+Enable multilingual searching with:
+
+```php
+Localized::column('name')
+    ->label('Name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+The column automatically resolves the displayed translation using the configured fallback order.
+
+## Localized Infolist Entries
+
+Use `Localized::entry()` for translated attributes in Filament infolists.
+
+```php
+use Hamada\FilamentLocalized\Facades\Localized;
+
+Localized::entry('description')
+    ->label('Description');
+```
+
+The displayed value follows the same locale and fallback rules used by the other package components.
+
+## Supported API
+
+The package provides a centralized API:
+
+| Method                | Purpose                                    |
+| --------------------- | ------------------------------------------ |
+| `Localized::tabs()`   | Create multilingual form tabs              |
+| `Localized::select()` | Create localized relationship selects      |
+| `Localized::column()` | Display and search localized table columns |
+| `Localized::entry()`  | Display localized infolist values          |
+
+The underlying specialized components are also available:
+
+```text
+LocalizedTabs
+LocalizedSelect
+LocalizedTextColumn
+LocalizedTextEntry
+```
+
+## Filament Panel Plugin
+
+The package also provides a Filament plugin class:
+
+```php
+use Hamada\FilamentLocalized\FilamentLocalizedPlugin;
+
+$panel
+    ->plugin(
+        FilamentLocalizedPlugin::make()
+    );
+```
+
+The plugin is intentionally lightweight. The localized components can be used independently and do not require additional panel-specific configuration.
+
+## Locale Configuration
+
+The complete configuration is available in:
+
+```text
+config/filament-localized.php
+```
+
+Example:
 
 ```php
 return [
+
+    'locales' => [
+
+        'ar' => [
+            'label' => 'العربية',
+            'short' => 'AR',
+            'direction' => 'rtl',
+        ],
+
+        'fr' => [
+            'label' => 'Français',
+            'short' => 'FR',
+            'direction' => 'ltr',
+        ],
+
+        'en' => [
+            'label' => 'English',
+            'short' => 'EN',
+            'direction' => 'ltr',
+        ],
+
+    ],
+
+    'default_locale' => 'fr',
+
+    'fallback_locales' => [
+        'fr',
+        'en',
+        'ar',
+    ],
+
+    'search_locales' => null,
+
 ];
 ```
 
-## Usage
+### Locale properties
+
+Each locale supports:
+
+| Property    | Description        |
+| ----------- | ------------------ |
+| `label`     | Full display name  |
+| `short`     | Short locale label |
+| `direction` | `rtl` or `ltr`     |
+
+For example:
 
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+'ar' => [
+    'label' => 'العربية',
+    'short' => 'AR',
+    'direction' => 'rtl',
+],
 ```
 
+## Using the Components Directly
+
+The facade is the recommended API for most applications.
+
+However, the underlying components can also be imported directly.
+
+### Localized Select
+
+```php
+use Hamada\FilamentLocalized\Components\Forms\LocalizedSelect;
+
+LocalizedSelect::make('skill_id')
+    ->relationship('skill')
+    ->localizedTitle('name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+### Localized Table Column
+
+```php
+use Hamada\FilamentLocalized\Components\Tables\LocalizedTextColumn;
+
+LocalizedTextColumn::make('name')
+    ->localizedSearch()
+    ->searchable();
+```
+
+### Localized Infolist Entry
+
+```php
+use Hamada\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
+
+LocalizedTextEntry::make('name');
+```
+
+## Recommended Database Structure
+
+A translated attribute should be stored as JSON.
+
+Example migration:
+
+```php
+Schema::create('skills', function (Blueprint $table) {
+    $table->id();
+    $table->json('name');
+    $table->json('description')->nullable();
+    $table->boolean('is_active')->default(true);
+    $table->timestamps();
+});
+```
+
+Example Eloquent model:
+
+```php
+class Skill extends Model
+{
+    protected $fillable = [
+        'name',
+        'description',
+        'is_active',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'name' => 'array',
+            'description' => 'array',
+            'is_active' => 'boolean',
+        ];
+    }
+}
+```
+
+The package does not require a translation-specific database table.
+
 ## Testing
+
+The package uses Pest for automated testing.
+
+Run the test suite:
 
 ```bash
 composer test
 ```
 
-## Changelog
+Run static analysis:
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+```bash
+composer analyse
+```
+
+Run code formatting:
+
+```bash
+composer lint
+```
+
+Run the complete development checks:
+
+```bash
+composer test
+composer analyse
+composer lint
+```
+
+## Architecture
+
+The package is organized around a small set of reusable components:
+
+```text
+Hamada\FilamentLocalized
+│
+├── Components
+│   ├── Forms
+│   │   ├── LocalizedTabs
+│   │   └── LocalizedSelect
+│   │
+│   ├── Infolists
+│   │   └── LocalizedTextEntry
+│   │
+│   └── Tables
+│       └── LocalizedTextColumn
+│
+├── Support
+│   ├── LocaleManager
+│   ├── TranslationManager
+│   └── TranslationQuery
+│
+├── Facades
+│   └── Localized
+│
+├── FilamentLocalized
+├── FilamentLocalizedPlugin
+└── FilamentLocalizedServiceProvider
+```
+
+The package intentionally keeps translation resolution and multilingual querying separate from the UI components, making the underlying functionality reusable across forms, tables, infolists, and relationship fields.
 
 ## Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+Contributions, bug reports, and feature requests are welcome.
 
-## Security Vulnerabilities
+Before submitting a pull request, please make sure the test suite and static analysis pass:
 
-Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
+```bash
+composer test
+composer analyse
+composer lint
+```
 
-## Credits
-
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+For bugs and feature requests, please use the project's issue tracker.
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+
+## Author
+
+Developed by **Belaaredj Ahmed**.
+
+GitHub:
+
+https://github.com/hamada/filament-localized
+
+---
+
+**Filament Localized** — reusable multilingual infrastructure for Filament 5.
