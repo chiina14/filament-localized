@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Belaaredj\FilamentLocalized\Facades;
 
-use Filament\Schemas\Components\Tabs;
 use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
 use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
 use Belaaredj\FilamentLocalized\Components\Tables\LocalizedTextColumn;
 use Belaaredj\FilamentLocalized\FilamentLocalized;
+use Filament\Schemas\Components\Tabs;
 use Illuminate\Support\Facades\Facade;
 
 /**

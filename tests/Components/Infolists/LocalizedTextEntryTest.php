@@ -1,8 +1,8 @@
 <?php
 
-use Filament\Infolists\Components\TextEntry;
 use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
 use Belaaredj\FilamentLocalized\Support\TranslationManager;
+use Filament\Infolists\Components\TextEntry;
 
 it('creates a localized text entry', function () {
     $entry = LocalizedTextEntry::make('name');

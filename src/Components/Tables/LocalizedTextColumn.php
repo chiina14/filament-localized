@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Belaaredj\FilamentLocalized\Components\Tables;
 
-use Filament\Tables\Columns\TextColumn;
 use Belaaredj\FilamentLocalized\Support\TranslationManager;
 use Belaaredj\FilamentLocalized\Support\TranslationQuery;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 
 class LocalizedTextColumn extends TextColumn

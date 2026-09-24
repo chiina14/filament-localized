@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Belaaredj\FilamentLocalized;
 
-use Filament\Forms\Components\Field;
-use Filament\Schemas\Components\Tabs;
 use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
 use Belaaredj\FilamentLocalized\Components\Forms\LocalizedTabs;
 use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
 use Belaaredj\FilamentLocalized\Components\Tables\LocalizedTextColumn;
+use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Tabs;
 
 class FilamentLocalized
 {

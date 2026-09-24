@@ -1,12 +1,12 @@
 <?php
 
+use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Tables\Columns\TextColumn;
-use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
-use Belaaredj\FilamentLocalized\Facades\Localized;
 
 it('creates localized tabs through the facade', function () {
     $tabs = Localized::tabs([

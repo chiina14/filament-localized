@@ -1,7 +1,7 @@
 <?php
 
-use Filament\Forms\Components\Select;
 use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
+use Filament\Forms\Components\Select;
 
 it('creates a localized select', function () {
     $select = LocalizedSelect::make('skill_id');

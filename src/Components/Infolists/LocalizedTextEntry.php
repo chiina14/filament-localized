@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Belaaredj\FilamentLocalized\Components\Infolists;
 
-use Filament\Infolists\Components\TextEntry;
 use Belaaredj\FilamentLocalized\Support\TranslationManager;
+use Filament\Infolists\Components\TextEntry;
 
 class LocalizedTextEntry extends TextEntry
 {

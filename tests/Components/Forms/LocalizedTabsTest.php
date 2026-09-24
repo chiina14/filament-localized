@@ -1,9 +1,9 @@
 <?php
 
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Tabs;
 use Belaaredj\FilamentLocalized\Components\Forms\LocalizedTabs;
 use Belaaredj\FilamentLocalized\Support\LocaleManager;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Tabs;
 
 it('creates a localized tabs component', function () {
     $tabs = LocalizedTabs::make([

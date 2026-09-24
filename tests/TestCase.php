@@ -2,6 +2,7 @@
 
 namespace Belaaredj\FilamentLocalized\Tests;
 
+use Belaaredj\FilamentLocalized\FilamentLocalizedServiceProvider;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -13,7 +14,6 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Belaaredj\FilamentLocalized\FilamentLocalizedServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\LivewireServiceProvider;

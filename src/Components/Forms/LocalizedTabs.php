@@ -2,10 +2,10 @@
 
 namespace Belaaredj\FilamentLocalized\Components\Forms;
 
+use Belaaredj\FilamentLocalized\Support\LocaleManager;
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Belaaredj\FilamentLocalized\Support\LocaleManager;
 
 class LocalizedTabs
 {

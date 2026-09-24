@@ -2,9 +2,9 @@
 
 namespace Belaaredj\FilamentLocalized\Components\Forms;
 
-use Filament\Forms\Components\Select;
 use Belaaredj\FilamentLocalized\Support\TranslationManager;
 use Belaaredj\FilamentLocalized\Support\TranslationQuery;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 
 class LocalizedSelect extends Select
