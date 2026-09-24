@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
-use Illuminate\Support\Facades\Route;
 use Belaaredj\FilamentLocalized\Components\LocaleSwitcher;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get(
     '/filament-localized/locale/{locale}',

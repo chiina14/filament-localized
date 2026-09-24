@@ -14,7 +14,7 @@ class FilamentLocalizedPlugin implements Plugin
     protected bool $localeSwitcher = true;
 
     protected string $localeSwitcherHook =
-    PanelsRenderHook::TOPBAR_END;
+        PanelsRenderHook::TOPBAR_END;
 
     public function getId(): string
     {
@@ -32,7 +32,7 @@ class FilamentLocalizedPlugin implements Plugin
             )
             ->renderHook(
                 $this->localeSwitcherHook,
-                fn(): string => $this->localeSwitcher
+                fn (): string => $this->localeSwitcher
                     ? view(
                         'filament-localized::components.locale-switcher'
                     )->render()
