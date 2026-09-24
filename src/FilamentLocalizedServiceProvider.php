@@ -7,6 +7,7 @@ namespace Belaaredj\FilamentLocalized;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class FilamentLocalizedServiceProvider extends PackageServiceProvider
 {
@@ -23,5 +24,14 @@ class FilamentLocalizedServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->askToStarRepoOnGitHub('Belaaredj/filament-localized');
             });
+    }
+
+    public function packageBooted(): void
+    {
+        Route::get('/filament-localized/locale/{locale}', function (string $locale) {
+            \Belaaredj\FilamentLocalized\Components\LocaleSwitcher::switch($locale);
+
+            return redirect()->back();
+        })->name('filament-localized.locale');
     }
 }
