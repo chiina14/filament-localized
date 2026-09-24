@@ -1,7 +1,7 @@
 <?php
 
 use Filament\Forms\Components\Select;
-use Hamada\FilamentLocalized\Components\Forms\LocalizedSelect;
+use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

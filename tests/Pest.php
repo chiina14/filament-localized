@@ -1,5 +1,5 @@
 <?php
 
-use Hamada\FilamentLocalized\Tests\TestCase;
+use Belaaredj\FilamentLocalized\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

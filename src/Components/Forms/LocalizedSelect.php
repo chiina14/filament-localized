@@ -1,10 +1,10 @@
 <?php
 
-namespace Hamada\FilamentLocalized\Components\Forms;
+namespace Belaaredj\FilamentLocalized\Components\Forms;
 
 use Filament\Forms\Components\Select;
-use Hamada\FilamentLocalized\Support\TranslationManager;
-use Hamada\FilamentLocalized\Support\TranslationQuery;
+use Belaaredj\FilamentLocalized\Support\TranslationManager;
+use Belaaredj\FilamentLocalized\Support\TranslationQuery;
 use Illuminate\Database\Eloquent\Builder;
 
 class LocalizedSelect extends Select

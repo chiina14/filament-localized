@@ -1,6 +1,6 @@
 <?php
 
-namespace Hamada\FilamentLocalized\Support;
+namespace Belaaredj\FilamentLocalized\Support;
 
 class LocaleManager
 {

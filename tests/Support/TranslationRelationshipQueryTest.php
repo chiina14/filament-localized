@@ -1,6 +1,6 @@
 <?php
 
-use Hamada\FilamentLocalized\Support\TranslationQuery;
+use Belaaredj\FilamentLocalized\Support\TranslationQuery;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

@@ -5,8 +5,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Tables\Columns\TextColumn;
-use Hamada\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
-use Hamada\FilamentLocalized\Facades\Localized;
+use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 
 it('creates localized tabs through the facade', function () {
     $tabs = Localized::tabs([

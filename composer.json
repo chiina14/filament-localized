@@ -1,5 +1,5 @@
 {
-    "name": "hamada/filament-localized",
+    "name": "belaaredj/filament-localized",
     "description": "Multilingual infrastructure plugin for Filament 5.",
     "keywords": [
         "laravel",
@@ -18,8 +18,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Hamada",
-            "email": "hamada14bel@gmail.com",
+            "name": "Belaaredj",
+            "email": "Belaaredj14bel@gmail.com",
             "role": "Developer"
         }
     ],
@@ -41,12 +41,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Hamada\\FilamentLocalized\\": "src/"
+            "Belaaredj\\FilamentLocalized\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Hamada\\FilamentLocalized\\Tests\\": "tests/"
+            "Belaaredj\\FilamentLocalized\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -61,7 +61,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Hamada\\FilamentLocalized\\FilamentLocalizedServiceProvider"
+                "Belaaredj\\FilamentLocalized\\FilamentLocalizedServiceProvider"
             ]
         }
     },

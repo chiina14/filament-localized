@@ -1,7 +1,7 @@
 <?php
 
 use Filament\Tables\Columns\TextColumn;
-use Hamada\FilamentLocalized\Components\Tables\LocalizedTextColumn;
+use Belaaredj\FilamentLocalized\Components\Tables\LocalizedTextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

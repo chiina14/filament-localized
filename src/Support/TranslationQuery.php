@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamada\FilamentLocalized\Support;
+namespace Belaaredj\FilamentLocalized\Support;
 
 use Illuminate\Database\Eloquent\Builder;
 

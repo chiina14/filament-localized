@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hamada\FilamentLocalized\Facades;
+namespace Belaaredj\FilamentLocalized\Facades;
 
 use Filament\Schemas\Components\Tabs;
-use Hamada\FilamentLocalized\Components\Forms\LocalizedSelect;
-use Hamada\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
-use Hamada\FilamentLocalized\Components\Tables\LocalizedTextColumn;
-use Hamada\FilamentLocalized\FilamentLocalized;
+use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
+use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
+use Belaaredj\FilamentLocalized\Components\Tables\LocalizedTextColumn;
+use Belaaredj\FilamentLocalized\FilamentLocalized;
 use Illuminate\Support\Facades\Facade;
 
 /**

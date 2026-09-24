@@ -27,7 +27,7 @@ Multilingual infrastructure for [Filament 5](https://filamentphp.com/), providin
 Install the package with Composer:
 
 ```bash
-composer require hamada/filament-localized
+composer require Belaaredj/filament-localized
 ```
 
 Publish the package configuration:
@@ -174,7 +174,7 @@ Use `Localized::tabs()` to create language tabs for your form fields.
 ```php
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
-use Hamada\FilamentLocalized\Facades\Localized;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 
 Localized::tabs([
     TextInput::make('name')
@@ -227,7 +227,7 @@ For MySQL, make sure the database supports JSON columns.
 Use `Localized::select()` for localized relationship options.
 
 ```php
-use Hamada\FilamentLocalized\Facades\Localized;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 
 Localized::select('skill_id')
     ->relationship('skill')
@@ -325,7 +325,7 @@ You can restrict the locales:
 Use `Localized::column()` for translated JSON attributes in Filament tables.
 
 ```php
-use Hamada\FilamentLocalized\Facades\Localized;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 
 Localized::column('name')
     ->label('Name');
@@ -347,7 +347,7 @@ The column automatically resolves the displayed translation using the configured
 Use `Localized::entry()` for translated attributes in Filament infolists.
 
 ```php
-use Hamada\FilamentLocalized\Facades\Localized;
+use Belaaredj\FilamentLocalized\Facades\Localized;
 
 Localized::entry('description')
     ->label('Description');
@@ -380,7 +380,7 @@ LocalizedTextEntry
 The package also provides a Filament plugin class:
 
 ```php
-use Hamada\FilamentLocalized\FilamentLocalizedPlugin;
+use Belaaredj\FilamentLocalized\FilamentLocalizedPlugin;
 
 $panel
     ->plugin(
@@ -467,7 +467,7 @@ However, the underlying components can also be imported directly.
 ### Localized Select
 
 ```php
-use Hamada\FilamentLocalized\Components\Forms\LocalizedSelect;
+use Belaaredj\FilamentLocalized\Components\Forms\LocalizedSelect;
 
 LocalizedSelect::make('skill_id')
     ->relationship('skill')
@@ -479,7 +479,7 @@ LocalizedSelect::make('skill_id')
 ### Localized Table Column
 
 ```php
-use Hamada\FilamentLocalized\Components\Tables\LocalizedTextColumn;
+use Belaaredj\FilamentLocalized\Components\Tables\LocalizedTextColumn;
 
 LocalizedTextColumn::make('name')
     ->localizedSearch()
@@ -489,7 +489,7 @@ LocalizedTextColumn::make('name')
 ### Localized Infolist Entry
 
 ```php
-use Hamada\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
+use Belaaredj\FilamentLocalized\Components\Infolists\LocalizedTextEntry;
 
 LocalizedTextEntry::make('name');
 ```
@@ -569,7 +569,7 @@ composer lint
 The package is organized around a small set of reusable components:
 
 ```text
-Hamada\FilamentLocalized
+Belaaredj\FilamentLocalized
 │
 ├── Components
 │   ├── Forms

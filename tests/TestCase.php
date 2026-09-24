@@ -1,6 +1,6 @@
 <?php
 
-namespace Hamada\FilamentLocalized\Tests;
+namespace Belaaredj\FilamentLocalized\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -13,7 +13,7 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Hamada\FilamentLocalized\FilamentLocalizedServiceProvider;
+use Belaaredj\FilamentLocalized\FilamentLocalizedServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\LivewireServiceProvider;
@@ -31,7 +31,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Hamada\\FilamentLocalized\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Belaaredj\\FilamentLocalized\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 

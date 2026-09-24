@@ -1,6 +1,6 @@
 <?php
 
-namespace Hamada\FilamentLocalized;
+namespace Belaaredj\FilamentLocalized;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;

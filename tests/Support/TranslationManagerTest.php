@@ -1,6 +1,6 @@
 <?php
 
-use Hamada\FilamentLocalized\Support\TranslationManager;
+use Belaaredj\FilamentLocalized\Support\TranslationManager;
 
 it('returns the current locale translation', function () {
     app()->setLocale('ar');

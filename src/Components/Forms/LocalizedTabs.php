@@ -1,11 +1,11 @@
 <?php
 
-namespace Hamada\FilamentLocalized\Components\Forms;
+namespace Belaaredj\FilamentLocalized\Components\Forms;
 
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Hamada\FilamentLocalized\Support\LocaleManager;
+use Belaaredj\FilamentLocalized\Support\LocaleManager;
 
 class LocalizedTabs
 {

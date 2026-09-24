@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hamada\FilamentLocalized\Components\Infolists;
+namespace Belaaredj\FilamentLocalized\Components\Infolists;
 
 use Filament\Infolists\Components\TextEntry;
-use Hamada\FilamentLocalized\Support\TranslationManager;
+use Belaaredj\FilamentLocalized\Support\TranslationManager;
 
 class LocalizedTextEntry extends TextEntry
 {

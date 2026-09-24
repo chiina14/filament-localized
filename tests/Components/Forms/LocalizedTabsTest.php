@@ -2,8 +2,8 @@
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
-use Hamada\FilamentLocalized\Components\Forms\LocalizedTabs;
-use Hamada\FilamentLocalized\Support\LocaleManager;
+use Belaaredj\FilamentLocalized\Components\Forms\LocalizedTabs;
+use Belaaredj\FilamentLocalized\Support\LocaleManager;
 
 it('creates a localized tabs component', function () {
     $tabs = LocalizedTabs::make([

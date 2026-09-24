@@ -1,13 +1,13 @@
 <?php
 
-namespace Hamada\FilamentLocalized\Tests\Components\Forms;
+namespace Belaaredj\FilamentLocalized\Tests\Components\Forms;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
-use Hamada\FilamentLocalized\Components\Forms\LocalizedTabs;
+use Belaaredj\FilamentLocalized\Components\Forms\LocalizedTabs;
 use Livewire\Component;
 use Livewire\Livewire;
 

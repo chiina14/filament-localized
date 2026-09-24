@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hamada\FilamentLocalized\Components\Tables;
+namespace Belaaredj\FilamentLocalized\Components\Tables;
 
 use Filament\Tables\Columns\TextColumn;
-use Hamada\FilamentLocalized\Support\TranslationManager;
-use Hamada\FilamentLocalized\Support\TranslationQuery;
+use Belaaredj\FilamentLocalized\Support\TranslationManager;
+use Belaaredj\FilamentLocalized\Support\TranslationQuery;
 use Illuminate\Database\Eloquent\Builder;
 
 class LocalizedTextColumn extends TextColumn

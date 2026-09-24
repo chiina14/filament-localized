@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hamada\FilamentLocalized;
+namespace Belaaredj\FilamentLocalized;
 
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -20,7 +20,7 @@ class FilamentLocalizedServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()
-                    ->askToStarRepoOnGitHub('hamada/filament-localized');
+                    ->askToStarRepoOnGitHub('Belaaredj/filament-localized');
             });
     }
 }
