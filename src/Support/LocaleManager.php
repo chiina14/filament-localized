@@ -1,40 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Belaaredj\FilamentLocalized\Support;
 
 class LocaleManager
 {
-    /**
-     * Get all configured locales.
-     *
-     * @return array<string, array<string, string>>
-     */
     public static function all(): array
     {
-        return config('filament-localized.locales', []);
+        return config(
+            'filament-localized.locales',
+            [],
+        );
     }
 
-    /**
-     * Get locale codes.
-     *
-     * @return array<int, string>
-     */
     public static function codes(): array
     {
         return array_keys(static::all());
     }
 
-    /**
-     * Get the default locale.
-     */
     public static function default(): string
     {
-        return config('filament-localized.default_locale', 'fr');
+        $default = config(
+            'filament-localized.default_locale',
+            'fr',
+        );
+
+        return in_array($default, static::codes(), true)
+            ? $default
+            : static::codes()[0];
     }
 
-    /**
-     * Get the fallback locale.
-     */
     public static function fallbacks(): array
     {
         return config(
@@ -43,73 +39,51 @@ class LocaleManager
         );
     }
 
-    /**
-     * Get the current application locale.
-     */
     public static function current(): string
     {
-        $locale = app()->getLocale();
-
-        if (in_array($locale, static::codes(), true)) {
-            return $locale;
-        }
-
-        return static::default();
+        return LocaleResolver::resolve();
     }
 
-    /**
-     * Get locale label.
-     */
     public static function label(string $locale): string
     {
         return static::all()[$locale]['label']
             ?? strtoupper($locale);
     }
 
-    /**
-     * Get short locale label.
-     */
     public static function short(string $locale): string
     {
         return static::all()[$locale]['short']
             ?? strtoupper($locale);
     }
 
-    /**
-     * Get locale direction.
-     */
     public static function direction(string $locale): string
     {
         return static::all()[$locale]['direction']
             ?? 'ltr';
     }
 
-    /**
-     * Determine whether locale is RTL.
-     */
     public static function isRtl(string $locale): bool
     {
         return static::direction($locale) === 'rtl';
     }
 
-    /**
-     * Get locales used for multilingual search.
-     *
-     * @return array<int, string>
-     */
+    public static function flag(string $locale): ?string
+    {
+        return static::all()[$locale]['flag'] ?? null;
+    }
+
     public static function searchLocales(): array
     {
-        return config('filament-localized.search_locales')
-            ?? static::codes();
+        return config(
+            'filament-localized.search_locales'
+        ) ?? static::codes();
     }
 
     public static function config(): array
     {
-        return config('filament-localized.locale_switcher', []);
-    }
-
-    public static function flag(string $locale): ?string
-    {
-        return static::all()[$locale]['flag'] ?? null;
+        return config(
+            'filament-localized.locale_switcher',
+            [],
+        );
     }
 }

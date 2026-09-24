@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Belaaredj\FilamentLocalized\Components;
 
 use Belaaredj\FilamentLocalized\Support\LocaleManager;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class LocaleSwitcher
 {
-    public static function switch(string $locale): void
+    public static function switch(string $locale): RedirectResponse
     {
         if (! in_array($locale, LocaleManager::codes(), true)) {
-            return;
+            return redirect()->back();
         }
 
         Session::put(
@@ -21,6 +22,8 @@ class LocaleSwitcher
         );
 
         app()->setLocale($locale);
+
+        return redirect()->back();
     }
 
     public static function current(): string
