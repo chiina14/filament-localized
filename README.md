@@ -619,10 +619,6 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 Developed by **Belaaredj Ahmed**.
 
-GitHub:
-
-https://github.com/hamada/filament-localized
-
 ---
 
 **Filament Localized** — reusable multilingual infrastructure for Filament 5.

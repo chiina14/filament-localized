@@ -21,7 +21,7 @@ class LocalizedSelect extends Select
         $select = parent::make($name);
 
         $select->getOptionLabelFromRecordUsing(
-            fn($record): ?string => TranslationManager::get(
+            fn ($record): ?string => TranslationManager::get(
                 $record->getAttribute(
                     $select->localizedTitleAttribute,
                 ),
