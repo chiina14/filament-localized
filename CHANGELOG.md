@@ -4,6 +4,10 @@ All notable changes to `filament-localized` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Filament Localized v1.1.1 - 2026-09-24
+
+Fix Route
+
 ## Filament Localized v1.1.0 - 2026-09-24
 
 ### Added
@@ -28,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ```bash
 composer require belaaredj/filament-localized
 
+
 ```
 ### Configuration
 
@@ -40,6 +45,7 @@ The locale switcher can be configured through the package configuration:
     'show_label' => true,
     'show_short' => false,
 ],
+
 
 ```
 ## [1.0.0] - 2026-09-24
