@@ -102,4 +102,14 @@ class LocaleManager
         return config('filament-localized.search_locales')
             ?? static::codes();
     }
+
+    public static function config(): array
+    {
+        return config('filament-localized.locale_switcher', []);
+    }
+
+    public static function flag(string $locale): ?string
+    {
+        return static::all()[$locale]['flag'] ?? null;
+    }
 }
