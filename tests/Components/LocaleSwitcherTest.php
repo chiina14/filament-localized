@@ -62,7 +62,7 @@ it('applies the resolved locale in middleware', function () {
 
     app(ApplyLocale::class)->handle(
         $request,
-        fn() => response('ok'),
+        fn () => response('ok'),
     );
 
     expect(app()->getLocale())->toBe('ar');

@@ -32,15 +32,11 @@ class FilamentLocalizedPlugin implements Plugin
             )
             ->renderHook(
                 $this->localeSwitcherHook,
-<<<<<<< HEAD
                 fn (): string => $this->localeSwitcher
-=======
-                fn(): string => $this->localeSwitcher
                     && (bool) config(
                         'filament-localized.locale_switcher.enabled',
                         true,
                     )
->>>>>>> 9abade2 (fix)
                     ? view(
                         'filament-localized::components.locale-switcher'
                     )->render()
