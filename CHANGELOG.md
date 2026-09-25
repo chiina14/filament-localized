@@ -4,9 +4,20 @@ All notable changes to `filament-localized` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
 ## Filament Localized v1.2.0 - 2026-09-24
 
 Fix
+=======
+## Unreleased
+
+### Added
+
+- Production-ready Filament locale switcher with configurable labels, short codes, flags, and render hooks.
+- Session locale persistence with optional user-attribute and browser-language resolution.
+- Safe locale validation, same-site redirects, RTL/LTR metadata, and persistent panel middleware coverage.
+- Focused automated tests and documentation for locale switching.
+>>>>>>> 9abade2 (fix)
 
 ## Filament Localized v1.1.1 - 2026-09-24
 
@@ -16,20 +27,20 @@ Fix Route
 
 ### Added
 
-* Integrated locale switcher for Filament 5.
-* Configurable language switcher in the Filament topbar.
-* Session-based locale persistence.
-* Configurable locale labels, short codes, and flags.
-* Locale validation before switching.
-* Middleware for applying the selected locale.
-* RTL/LTR locale metadata.
-* Improved multilingual localization infrastructure.
+- Integrated locale switcher for Filament 5.
+- Configurable language switcher in the Filament topbar.
+- Session-based locale persistence.
+- Configurable locale labels, short codes, and flags.
+- Locale validation before switching.
+- Middleware for applying the selected locale.
+- RTL/LTR locale metadata.
+- Improved multilingual localization infrastructure.
 
 ### Compatibility
 
-* PHP `^8.2`
-* Filament `^5.0`
-* Laravel 12
+- PHP `^8.2`
+- Filament `^5.0`
+- Laravel 12
 
 ### Installation
 
@@ -39,6 +50,7 @@ composer require belaaredj/filament-localized
 
 
 ```
+
 ### Configuration
 
 The locale switcher can be configured through the package configuration:
@@ -54,6 +66,7 @@ The locale switcher can be configured through the package configuration:
 
 
 ```
+
 ## [1.0.0] - 2026-09-24
 
 ### Added

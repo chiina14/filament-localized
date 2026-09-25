@@ -6,24 +6,28 @@ namespace Belaaredj\FilamentLocalized\Components;
 
 use Belaaredj\FilamentLocalized\Support\LocaleManager;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class LocaleSwitcher
 {
-    public static function switch(string $locale): RedirectResponse
-    {
+    public static function switch(
+        string $locale,
+        ?Request $request = null,
+    ): RedirectResponse {
+        $request ??= request();
+
         if (! in_array($locale, LocaleManager::codes(), true)) {
-            return redirect()->back();
+            return self::redirectBack($request);
         }
 
-        Session::put(
-            'filament-localized.locale',
-            $locale,
-        );
+        if (config('filament-localized.locale_persistence.session', true)) {
+            Session::put('filament-localized.locale', $locale);
+        }
 
         app()->setLocale($locale);
 
-        return redirect()->back();
+        return self::redirectBack($request);
     }
 
     public static function current(): string
@@ -62,5 +66,44 @@ class LocaleSwitcher
         return (bool) (
             LocaleManager::config()['show_short'] ?? false
         );
+    }
+
+    public static function flag(string $locale): ?string
+    {
+        $flag = LocaleManager::flag($locale);
+
+        return is_string($flag) && $flag !== '' ? $flag : null;
+    }
+
+    public static function flagFallback(string $locale): string
+    {
+        return match (config(
+            'filament-localized.locale_switcher.flag_fallback',
+            'short',
+        )) {
+            'label' => LocaleManager::label($locale),
+            'none' => '',
+            default => LocaleManager::short($locale),
+        };
+    }
+
+    private static function redirectBack(Request $request): RedirectResponse
+    {
+        $referer = $request->headers->get('referer');
+        $refererHost = is_string($referer)
+            ? parse_url($referer, PHP_URL_HOST)
+            : null;
+        $isRelativeReferer = is_string($referer)
+            && str_starts_with($referer, '/')
+            && ! str_starts_with($referer, '//');
+
+        if (
+            is_string($referer)
+            && ($isRelativeReferer || $refererHost === $request->getHost())
+        ) {
+            return redirect()->to($referer);
+        }
+
+        return redirect()->to('/');
     }
 }

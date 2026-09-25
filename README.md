@@ -390,6 +390,23 @@ $panel
 
 The plugin is intentionally lightweight. The localized components can be used independently and do not require additional panel-specific configuration.
 
+### Locale Switcher
+
+The plugin includes an enabled-by-default locale switcher in the Filament topbar. Configure it per panel:
+
+```php
+use Filament\View\PanelsRenderHook;
+use Belaaredj\FilamentLocalized\FilamentLocalizedPlugin;
+
+$panel->plugin(
+    FilamentLocalizedPlugin::make()
+        ->localeSwitcher()
+        ->localeSwitcherHook(PanelsRenderHook::TOPBAR_END)
+);
+```
+
+Disable it for a panel with `->localeSwitcher(false)`. The switcher validates locales, stores the selection in the session, and redirects back to the same-site referring page. Persistent panel middleware reapplies the locale before Filament renders each request, including Livewire requests.
+
 ## Locale Configuration
 
 The complete configuration is available in:
@@ -435,6 +452,25 @@ return [
 
     'search_locales' => null,
 
+    'locale_switcher' => [
+        'enabled' => true,
+        'show_flag' => true,
+        'show_label' => true,
+        'show_short' => false,
+        'flag_fallback' => 'short',
+    ],
+
+    'locale_persistence' => [
+        'session' => true,
+        'user' => [
+            'enabled' => false,
+            'attribute' => 'locale',
+        ],
+        'browser' => [
+            'enabled' => false,
+        ],
+    ],
+
 ];
 ```
 
@@ -442,11 +478,12 @@ return [
 
 Each locale supports:
 
-| Property    | Description        |
-| ----------- | ------------------ |
-| `label`     | Full display name  |
-| `short`     | Short locale label |
-| `direction` | `rtl` or `ltr`     |
+| Property    | Description               |
+| ----------- | ------------------------- |
+| `label`     | Full display name         |
+| `short`     | Short locale label        |
+| `direction` | `rtl` or `ltr`            |
+| `flag`      | Text, emoji, or image URL |
 
 For example:
 
@@ -457,6 +494,17 @@ For example:
     'direction' => 'rtl',
 ],
 ```
+
+Missing flags use `flag_fallback` (`short`, `label`, or `none`), so the switcher remains usable on systems whose fonts do not provide emoji flags. Locale resolution uses this priority: explicit valid request locale, session locale, optional authenticated-user attribute, optional browser language, then the configured default. User persistence and browser detection are disabled by default, so no user column or migration is required.
+
+The locale direction is metadata for the selected language. The package does not force the entire Filament document into RTL or LTR by default. Apply `LocaleManager::direction(app()->getLocale())` in an application layout only when the whole interface should follow that direction.
+
+### Troubleshooting
+
+- Clear configuration cache after changing the config with `php artisan config:clear`.
+- Confirm the locale code is a key in `locales`; unsupported route values are rejected.
+- Ensure the panel uses `FilamentLocalizedPlugin` so persistent middleware runs on navigation and Livewire requests.
+- If a flag does not display, use an image URL or set `flag_fallback` to `short`.
 
 ## Using the Components Directly
 

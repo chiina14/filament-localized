@@ -14,8 +14,9 @@ class LocaleResolver
 
         $locales = LocaleManager::codes();
 
-        // 1. Query parameter
-        $queryLocale = $request->query('lang');
+        // 1. Explicit request selection
+        $queryLocale = $request->query('lang')
+            ?? $request->route('locale');
 
         if (
             is_string($queryLocale)
@@ -24,7 +25,7 @@ class LocaleResolver
             return $queryLocale;
         }
 
-        // 2. Session
+        // 2. Persisted session selection
         $sessionLocale = session('filament-localized.locale');
 
         if (
@@ -34,22 +35,25 @@ class LocaleResolver
             return $sessionLocale;
         }
 
-        // 3. Cookie
-        $cookieLocale = $request->cookie(
-            'filament-localized.locale'
-        );
+        // 3. Authenticated user, when explicitly enabled.
+        $user = $request->user();
+        $userLocale = null;
 
         if (
-            is_string($cookieLocale)
-            && in_array($cookieLocale, $locales, true)
+            config(
+                'filament-localized.locale_persistence.user.enabled',
+                false,
+            )
+            && is_object($user)
+            && method_exists($user, 'getAttribute')
         ) {
-            return $cookieLocale;
+            $userLocale = $user->getAttribute(
+                config(
+                    'filament-localized.locale_persistence.user.attribute',
+                    'locale',
+                ),
+            );
         }
-
-        // 4. Authenticated user
-        $userLocale = auth()->user()?->getAttribute(
-            'locale'
-        );
 
         if (
             is_string($userLocale)
@@ -58,10 +62,13 @@ class LocaleResolver
             return $userLocale;
         }
 
-        // 5. Browser language
-        $browserLocale = $request->getPreferredLanguage(
-            $locales
-        );
+        // 4. Browser language, when enabled.
+        $browserLocale = config(
+            'filament-localized.locale_persistence.browser.enabled',
+            false,
+        )
+            ? $request->getPreferredLanguage($locales)
+            : null;
 
         if (
             is_string($browserLocale)
@@ -70,7 +77,7 @@ class LocaleResolver
             return $browserLocale;
         }
 
-        // 6. Default
+        // 5. Configured default
         return LocaleManager::default();
     }
 }

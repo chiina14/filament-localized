@@ -39,6 +39,18 @@ return [
         'show_flag' => true,
         'show_label' => true,
         'show_short' => false,
+        'flag_fallback' => 'short',
+    ],
+
+    'locale_persistence' => [
+        'session' => true,
+        'user' => [
+            'enabled' => false,
+            'attribute' => 'locale',
+        ],
+        'browser' => [
+            'enabled' => false,
+        ],
     ],
 
 ];
