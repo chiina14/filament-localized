@@ -6,21 +6,21 @@ return [
             'label' => 'العربية',
             'short' => 'AR',
             'direction' => 'rtl',
-            'flag' => '🇩🇿',
+            'flag' => 'https://flagcdn.com/w40/dz.png',
         ],
 
         'fr' => [
             'label' => 'Français',
             'short' => 'FR',
             'direction' => 'ltr',
-            'flag' => '🇫🇷',
+            'flag' => 'https://flagcdn.com/w40/fr.png',
         ],
 
         'en' => [
             'label' => 'English',
             'short' => 'EN',
             'direction' => 'ltr',
-            'flag' => '🇬🇧',
+            'flag' => 'https://flagcdn.com/w40/gb.png',
         ],
     ],
 

@@ -9,14 +9,15 @@
 @if (LocaleSwitcher::isEnabled())
     <x-filament::dropdown placement="bottom-end">
         <x-slot name="trigger">
-            <x-filament::button color="gray" size="sm" icon="heroicon-o-language" :aria-label="__('Change language')">
-                <span class="flex items-center gap-2">
+            <x-filament::button color="gray" size="sm" :aria-label="__('Change language')">
+                <span style="display: flex; align-items: center; gap: 0.5rem; direction: ltr; white-space: nowrap">
                     @if (LocaleSwitcher::showFlag())
-                        <span class="text-base leading-none">
+                        <span
+                            style="display: inline-flex; flex: 0 0 1rem; width: 1rem; height: 1rem; overflow: hidden; align-items: center; justify-content: center; border-radius: 50%; line-height: 1">
                             @if (is_string(LocaleSwitcher::flag($currentLocale)) &&
                                     filter_var(LocaleSwitcher::flag($currentLocale), FILTER_VALIDATE_URL))
                                 <img src="{{ LocaleSwitcher::flag($currentLocale) }}" alt=""
-                                    class="h-4 w-6 object-cover" />
+                                    style="display: block; width: 100%; height: 100%; object-fit: cover" />
                             @else
                                 {{ LocaleSwitcher::flag($currentLocale) ?? LocaleSwitcher::flagFallback($currentLocale) }}
                             @endif
@@ -41,11 +42,13 @@
         <x-filament::dropdown.list>
             @foreach ($locales as $code => $locale)
                 <x-filament::dropdown.list.item tag="a" :href="route('filament-localized.locale', ['locale' => $code])" :icon="$code === $currentLocale ? 'heroicon-m-check' : null">
-                    <span class="flex w-full items-center gap-3">
+                    <span style="display: flex; width: 100%; align-items: center; gap: 0.75rem; direction: ltr">
                         @if (LocaleSwitcher::showFlag())
-                            <span class="inline-flex w-6 shrink-0 items-center justify-center text-lg leading-none">
+                            <span
+                                style="display: inline-flex; flex: 0 0 1rem; width: 1rem; height: 1rem; overflow: hidden; align-items: center; justify-content: center; border-radius: 50%; line-height: 1">
                                 @if (is_string($locale['flag'] ?? null) && filter_var($locale['flag'], FILTER_VALIDATE_URL))
-                                    <img src="{{ $locale['flag'] }}" alt="" class="h-4 w-6 object-cover" />
+                                    <img src="{{ $locale['flag'] }}" alt=""
+                                        style="display: block; width: 100%; height: 100%; object-fit: cover" />
                                 @else
                                     {{ $locale['flag'] ?? LocaleSwitcher::flagFallback($code) }}
                                 @endif
@@ -53,13 +56,13 @@
                         @endif
 
                         @if (LocaleSwitcher::showLabel())
-                            <span class="flex-1">
+                            <span style="flex: 1">
                                 {{ $locale['label'] ?? strtoupper($code) }}
                             </span>
                         @endif
 
                         @if (LocaleSwitcher::showShort())
-                            <span class="text-xs text-gray-500 dark:text-gray-400">
+                            <span style="font-size: 0.75rem; line-height: 1rem; color: rgb(107 114 128)">
                                 {{ $locale['short'] ?? strtoupper($code) }}
                             </span>
                         @endif
