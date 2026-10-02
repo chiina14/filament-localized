@@ -11,6 +11,8 @@ afterEach(function () {
     config()->set('filament-localized.locales.en.flag', '🇬🇧');
     config()->set('filament-localized.locale_switcher.enabled', true);
     config()->set('filament-localized.locale_switcher.show_short', false);
+    config()->set('filament-localized.locale_persistence.user.enabled', false);
+    config()->set('filament-localized.locale_persistence.user.attribute', 'locale');
     config()->set('filament-localized.locale_persistence.browser.enabled', false);
 });
 
@@ -27,6 +29,39 @@ it('switches to a configured locale and persists it in the session', function ()
     expect(LocaleSwitcher::current())->toBe('en');
 });
 
+it('persists the selected locale on the authenticated user when enabled', function () {
+    config()->set('filament-localized.locale_persistence.user.enabled', true);
+
+    $user = new class
+    {
+        public ?string $locale = null;
+
+        public bool $saved = false;
+
+        public function setAttribute(string $key, mixed $value): static
+        {
+            $this->{$key} = $value;
+
+            return $this;
+        }
+
+        public function save(): bool
+        {
+            $this->saved = true;
+
+            return true;
+        }
+    };
+
+    $request = Request::create('/');
+    $request->setUserResolver(fn() => $user);
+
+    LocaleSwitcher::switch('en', $request);
+
+    expect($user->locale)->toBe('en')
+        ->and($user->saved)->toBeTrue();
+});
+
 it('rejects unsupported locales without changing the session', function () {
     session(['filament-localized.locale' => 'fr']);
 
@@ -39,6 +74,24 @@ it('rejects unsupported locales without changing the session', function () {
 it('resolves an explicit locale before the session locale', function () {
     session(['filament-localized.locale' => 'fr']);
     $request = Request::create('/?lang=en');
+
+    expect(LocaleResolver::resolve($request))->toBe('en');
+});
+
+it('prefers the authenticated user locale over a stale session locale', function () {
+    config()->set('filament-localized.locale_persistence.user.enabled', true);
+    session(['filament-localized.locale' => 'fr']);
+
+    $user = new class
+    {
+        public function getAttribute(string $key): string
+        {
+            return 'en';
+        }
+    };
+
+    $request = Request::create('/');
+    $request->setUserResolver(fn() => $user);
 
     expect(LocaleResolver::resolve($request))->toBe('en');
 });
@@ -62,7 +115,7 @@ it('applies the resolved locale in middleware', function () {
 
     app(ApplyLocale::class)->handle(
         $request,
-        fn () => response('ok'),
+        fn() => response('ok'),
     );
 
     expect(app()->getLocale())->toBe('ar');

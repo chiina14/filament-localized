@@ -25,17 +25,7 @@ class LocaleResolver
             return $queryLocale;
         }
 
-        // 2. Persisted session selection
-        $sessionLocale = session('filament-localized.locale');
-
-        if (
-            is_string($sessionLocale)
-            && in_array($sessionLocale, $locales, true)
-        ) {
-            return $sessionLocale;
-        }
-
-        // 3. Authenticated user, when explicitly enabled.
+        // 2. Authenticated user, when explicitly enabled.
         $user = $request->user();
         $userLocale = null;
 
@@ -60,6 +50,16 @@ class LocaleResolver
             && in_array($userLocale, $locales, true)
         ) {
             return $userLocale;
+        }
+
+        // 3. Persisted session selection
+        $sessionLocale = session('filament-localized.locale');
+
+        if (
+            is_string($sessionLocale)
+            && in_array($sessionLocale, $locales, true)
+        ) {
+            return $sessionLocale;
         }
 
         // 4. Browser language, when enabled.

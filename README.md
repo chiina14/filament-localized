@@ -405,7 +405,7 @@ $panel->plugin(
 );
 ```
 
-Disable it for a panel with `->localeSwitcher(false)`. The switcher validates locales, stores the selection in the session, and redirects back to the same-site referring page. Persistent panel middleware reapplies the locale before Filament renders each request, including Livewire requests.
+Disable it for a panel with `->localeSwitcher(false)`. The switcher validates locales, stores the selection in the session, and redirects back to the same-site referring page. When user persistence is enabled, it also saves the selection on the authenticated user. Persistent panel middleware reapplies the locale before Filament renders each request, including Livewire requests.
 
 ## Locale Configuration
 
@@ -495,7 +495,23 @@ For example:
 ],
 ```
 
-Missing flags use `flag_fallback` (`short`, `label`, or `none`), so the switcher remains usable on systems whose fonts do not provide emoji flags. Locale resolution uses this priority: explicit valid request locale, session locale, optional authenticated-user attribute, optional browser language, then the configured default. User persistence and browser detection are disabled by default, so no user column or migration is required.
+Missing flags use `flag_fallback` (`short`, `label`, or `none`), so the switcher remains usable on systems whose fonts do not provide emoji flags. Locale resolution uses this priority: explicit valid request locale, optional authenticated-user attribute, session locale, optional browser language, then the configured default. User persistence and browser detection are disabled by default, so no user column or migration is required unless user persistence is enabled.
+
+### Persisting a user's language across devices
+
+To keep a user's selected language after logout or when they sign in on another device, add a nullable `locale` column to your application's users table, then enable user persistence:
+
+```php
+'locale_persistence' => [
+    'session' => true,
+    'user' => [
+        'enabled' => true,
+        'attribute' => 'locale',
+    ],
+],
+```
+
+When enabled, selecting a language while authenticated updates that user's configured attribute. On authenticated requests the saved user language takes precedence over the session; explicit valid locale requests still take precedence over both. Guests continue to use the session. If your user model stores this preference under another attribute, set `attribute` to that column name.
 
 The locale direction is metadata for the selected language. The package does not force the entire Filament document into RTL or LTR by default. Apply `LocaleManager::direction(app()->getLocale())` in an application layout only when the whole interface should follow that direction.
 

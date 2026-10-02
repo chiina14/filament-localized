@@ -25,6 +25,8 @@ class LocaleSwitcher
             Session::put('filament-localized.locale', $locale);
         }
 
+        self::persistLocaleForUser($request, $locale);
+
         app()->setLocale($locale);
 
         return self::redirectBack($request);
@@ -105,5 +107,33 @@ class LocaleSwitcher
         }
 
         return redirect()->to('/');
+    }
+
+    private static function persistLocaleForUser(
+        Request $request,
+        string $locale,
+    ): void {
+        if (! config('filament-localized.locale_persistence.user.enabled', false)) {
+            return;
+        }
+
+        $user = $request->user();
+        $attribute = config(
+            'filament-localized.locale_persistence.user.attribute',
+            'locale',
+        );
+
+        if (
+            ! is_object($user)
+            || ! method_exists($user, 'setAttribute')
+            || ! method_exists($user, 'save')
+            || ! is_string($attribute)
+            || $attribute === ''
+        ) {
+            return;
+        }
+
+        $user->setAttribute($attribute, $locale);
+        $user->save();
     }
 }
