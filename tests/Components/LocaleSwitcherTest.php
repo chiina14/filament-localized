@@ -54,7 +54,7 @@ it('persists the selected locale on the authenticated user when enabled', functi
     };
 
     $request = Request::create('/');
-    $request->setUserResolver(fn() => $user);
+    $request->setUserResolver(fn () => $user);
 
     LocaleSwitcher::switch('en', $request);
 
@@ -91,7 +91,7 @@ it('prefers the authenticated user locale over a stale session locale', function
     };
 
     $request = Request::create('/');
-    $request->setUserResolver(fn() => $user);
+    $request->setUserResolver(fn () => $user);
 
     expect(LocaleResolver::resolve($request))->toBe('en');
 });
@@ -115,7 +115,7 @@ it('applies the resolved locale in middleware', function () {
 
     app(ApplyLocale::class)->handle(
         $request,
-        fn() => response('ok'),
+        fn () => response('ok'),
     );
 
     expect(app()->getLocale())->toBe('ar');
