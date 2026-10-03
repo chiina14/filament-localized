@@ -10,7 +10,7 @@ it('publishes the migration under the package migration tag', function () {
     );
 
     expect(collect($migrationPaths)->keys()->contains(
-        fn(string $path): bool => basename($path)
+        fn (string $path): bool => basename($path)
             === 'add_locale_to_users_table.php.stub',
     ))->toBeTrue();
 });
