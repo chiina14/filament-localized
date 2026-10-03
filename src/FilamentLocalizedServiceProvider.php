@@ -19,6 +19,7 @@ class FilamentLocalizedServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasRoute('web')
+            ->hasMigration('add_locale_to_users_table')
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->publishConfigFile()

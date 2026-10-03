@@ -1,20 +1,17 @@
 # Filament Localized
 
-Multilingual infrastructure for [Filament 5](https://filamentphp.com/), providing reusable localized form fields, relationship selects, table columns, infolist entries, multilingual search, and configurable translation fallbacks.
+Filament Localized is a Laravel package for building multilingual [Filament 5](https://filamentphp.com/) applications. It provides localized form components, relationship selects, table columns, infolist entries, multilingual search, and configurable translation fallbacks.
+
+[Installation](#installation) · [Configuration](#configuration) · [Translation fallback](#translation-fallback) · [Localized form tabs](#localized-form-tabs) · [Localized select](#localized-select) · [Relationship search](#localized-relationship-search) · [Table columns](#localized-table-columns) · [Infolist entries](#localized-infolist-entries) · [Panel plugin](#filament-panel-plugin) · [Locale configuration](#locale-configuration) · [Database structure](#recommended-database-structure) · [Testing](#testing) · [Contributing](#contributing) · [License](#license)
 
 ## Features
 
-- 🌍 Multi-language form tabs
-- 🔎 Multilingual table search
-- 🔗 Localized relationship selects
-- 🔍 Multilingual relationship search
-- 📋 Localized table columns
-- 📄 Localized infolist entries
-- ↔️ RTL/LTR locale support
-- 🔄 Configurable translation fallback
-- ⚙️ Centralized locale configuration
-- 🧩 Reusable API through `Localized`
-- 🧪 Tested with Filament 5
+- Multilingual form tabs
+- Localized relationship selects and search
+- Localized table columns and infolist entries
+- RTL/LTR locale metadata
+- Configurable translation fallbacks
+- Centralized locale configuration and a reusable `Localized` API
 
 ## Requirements
 
@@ -27,7 +24,7 @@ Multilingual infrastructure for [Filament 5](https://filamentphp.com/), providin
 Install the package with Composer:
 
 ```bash
-composer require Belaaredj/filament-localized
+composer require belaaredj/filament-localized
 ```
 
 Publish the package configuration:
@@ -36,13 +33,20 @@ Publish the package configuration:
 php artisan vendor:publish --tag=filament-localized-config
 ```
 
+To persist each user's selected locale across logouts and devices, publish and run the optional migration:
+
+```bash
+php artisan vendor:publish --tag=filament-localized-migrations
+php artisan migrate
+```
+
 The configuration file will be available at:
 
 ```text
 config/filament-localized.php
 ```
 
-You can then customize the supported locales and fallback behavior.
+Publish the configuration when you want to customize supported locales, fallback behavior, or locale persistence.
 
 ## Configuration
 
@@ -182,7 +186,7 @@ Localized::tabs([
 
     RichEditor::make('description')
         ->label('Description'),
-])
+]);
 ```
 
 The package generates a field structure based on the configured locales.
@@ -499,7 +503,11 @@ Missing flags use `flag_fallback` (`short`, `label`, or `none`), so the switcher
 
 ### Persisting a user's language across devices
 
-To keep a user's selected language after logout or when they sign in on another device, add a nullable `locale` column to your application's users table, then enable user persistence:
+To keep a user's selected language after logout or when they sign in on another device, run the optional migration commands from [Installation](#installation). The migration adds a nullable `locale` column to the conventional `users` table.
+
+If your authentication model uses a different table, edit the published migration before running it.
+
+Then enable user persistence in your application's `config/filament-localized.php` (not in the package's `vendor` directory):
 
 ```php
 'locale_persistence' => [
@@ -511,7 +519,7 @@ To keep a user's selected language after logout or when they sign in on another 
 ],
 ```
 
-When enabled, selecting a language while authenticated updates that user's configured attribute. On authenticated requests the saved user language takes precedence over the session; explicit valid locale requests still take precedence over both. Guests continue to use the session. If your user model stores this preference under another attribute, set `attribute` to that column name.
+Then select the language again while signed in so it is saved to the account. When enabled, authenticated selections update the configured user attribute. On authenticated requests the saved user language takes precedence over the session; explicit valid locale requests still take precedence over both. Guests continue to use the session. If your user model or table uses another attribute, adjust the migration and `attribute` setting to match. The migration is published, not run automatically, and user persistence remains disabled by default so the package does not modify an application's database without an explicit opt-in.
 
 The locale direction is metadata for the selected language. The package does not force the entire Filament document into RTL or LTR by default. Apply `LocaleManager::direction(app()->getLocale())` in an application layout only when the whole interface should follow that direction.
 
@@ -620,12 +628,18 @@ Run code formatting:
 composer lint
 ```
 
-Run the complete development checks:
+Check formatting without modifying files:
+
+```bash
+composer lint:test
+```
+
+Run all non-mutating checks before publishing:
 
 ```bash
 composer test
 composer analyse
-composer lint
+composer lint:test
 ```
 
 ## Architecture
@@ -665,19 +679,19 @@ The package intentionally keeps translation resolution and multilingual querying
 
 Contributions, bug reports, and feature requests are welcome.
 
-Before submitting a pull request, please make sure the test suite and static analysis pass:
+Before submitting a pull request, run the tests, static analysis, and formatting check:
 
 ```bash
 composer test
 composer analyse
-composer lint
+composer lint:test
 ```
 
-For bugs and feature requests, please use the project's issue tracker.
+For bugs and feature requests, use the [GitHub issue tracker](https://github.com/chiina14/filament-localized/issues).
 
 ## License
 
-The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+This package is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
 
 ## Author
 
